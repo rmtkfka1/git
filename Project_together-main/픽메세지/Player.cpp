@@ -27,6 +27,7 @@ Player::~Player()
 
 	player2_img_left.Destroy();
 	player2_img_right.Destroy();
+	fire_img.Destroy();
 }
 
 
