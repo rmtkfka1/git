@@ -76,6 +76,18 @@ void Tile::Update()
                     }
                 }
 
+
+                if (!p->rand1) {
+                    p->rand1 = true;
+                }
+
+                std::thread resetFireThread([p]() {
+                    std::this_thread::sleep_for(std::chrono::milliseconds(100)); 
+                    p->rand1 = false;
+                    });
+
+                resetFireThread.detach();
+
             }
         }
 
@@ -130,6 +142,16 @@ void Tile::Update()
                     }
                 }
 
+                if (!p->rand2) {
+                    p->rand2 = true;
+                }
+
+                std::thread resetFireThread([p]() {
+                    std::this_thread::sleep_for(std::chrono::milliseconds(100));
+                    p->rand2 = false;
+                    });
+
+                resetFireThread.detach();
             }
         }
 

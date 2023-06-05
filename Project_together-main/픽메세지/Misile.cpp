@@ -78,18 +78,19 @@ void Missile::Update()
 		}
 	}
 
-	//객체삭제구현//
-	if (_pos.x > 4000)
+	if (_pos.x > 6000)
 	{
 		GET_SINGLE(ObjectManager)->Remove(this);
 		return; //삭제하면 무조건 리턴을 떄려야한다.
 	}
 
-	if (_pos.x < -4000)
+	if (_pos.x < -6000)
 	{
 		GET_SINGLE(ObjectManager)->Remove(this);
 		return; //삭제하면 무조건 리턴을 떄려야한다.
 	}
+
+
 };
 
 
@@ -122,6 +123,7 @@ void Missile::Render(HDC mdc)
 
 	TransparentBlt(mdc, _Renderpos.x, _Renderpos.y, size.x, size.y,
 		mdc2, 0, 0, bullet_img.GetWidth(), bullet_img.GetHeight(), RGB(0, 0, 0));
+
 
 	DeleteObject(hBitmap2);
 	DeleteDC(mdc2);

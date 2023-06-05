@@ -454,6 +454,15 @@ void Player::jump1()
 
 	JumpTime1 += 0.75f;		//값을 올리면 점프속도가 빨라짐
 
+	if (rand1)
+	{
+		JumpTime1 = 0.f;
+		JumpHeight1 = 0;
+		jumpPower1 = 60.f;
+		temp1 = 0.0f;
+		g_bJumpkeyPressed1 = FALSE;
+		return;
+	}
 
 	if (JumpTime1 > jumpPower1)
 	{
@@ -475,6 +484,17 @@ void Player::jump2()
 	temp2 = JumpHeight2;
 
 	JumpTime2 += 1.f;		//값을 올리면 점프속도가 빨라짐
+
+	if (rand2)
+	{
+		JumpTime2 = 0.f;
+		JumpHeight2 = 0;
+		jumpPower2 = 60.f;
+		temp2 = 0.0f;
+		g_bJumpkeyPressed2 = FALSE;
+		return;
+	}
+
 
 	if (JumpTime2 > jumpPower2)
 	{
