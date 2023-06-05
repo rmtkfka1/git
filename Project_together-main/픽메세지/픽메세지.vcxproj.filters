@@ -1,0 +1,124 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="소스 파일">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="리소스 파일">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="소스 파일\헤더">
+      <UniqueIdentifier>{689fb9e4-39fe-4577-9521-bfb32aa18bb0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\01.GAME">
+      <UniqueIdentifier>{f44a70a7-b0a2-4800-84f4-fbf3f410c696}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\02.KEYBOARD">
+      <UniqueIdentifier>{611168ac-b2d5-4758-a8c9-11a30b027fc5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\03.TIME">
+      <UniqueIdentifier>{610985eb-c677-48df-8b6b-8c8855f1b915}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\04.SCENE">
+      <UniqueIdentifier>{c1496351-2914-40a8-8703-dba38d37a8bc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\05.OBJECT">
+      <UniqueIdentifier>{04fd8fd9-6258-4f02-ac45-ac09bea2edb5}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="GAME.cpp">
+      <Filter>소스 파일\01.GAME</Filter>
+    </ClCompile>
+    <ClCompile Include="기말.cpp" />
+    <ClCompile Include="pch.cpp">
+      <Filter>소스 파일\헤더</Filter>
+    </ClCompile>
+    <ClCompile Include="TImeManager.cpp">
+      <Filter>소스 파일\03.TIME</Filter>
+    </ClCompile>
+    <ClCompile Include="KeyManager.cpp">
+      <Filter>소스 파일\02.KEYBOARD</Filter>
+    </ClCompile>
+    <ClCompile Include="stage1.cpp">
+      <Filter>소스 파일\04.SCENE</Filter>
+    </ClCompile>
+    <ClCompile Include="SceanManager.cpp">
+      <Filter>소스 파일\04.SCENE</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene.cpp">
+      <Filter>소스 파일\04.SCENE</Filter>
+    </ClCompile>
+    <ClCompile Include="Object.cpp">
+      <Filter>소스 파일\05.OBJECT</Filter>
+    </ClCompile>
+    <ClCompile Include="BackGround.cpp">
+      <Filter>소스 파일\05.OBJECT</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>소스 파일\05.OBJECT</Filter>
+    </ClCompile>
+    <ClCompile Include="ObjectManager.cpp">
+      <Filter>소스 파일\05.OBJECT</Filter>
+    </ClCompile>
+    <ClCompile Include="Misile.cpp">
+      <Filter>소스 파일\05.OBJECT</Filter>
+    </ClCompile>
+    <ClCompile Include="Tile.cpp">
+      <Filter>소스 파일\05.OBJECT</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="GAME.h">
+      <Filter>소스 파일\01.GAME</Filter>
+    </ClInclude>
+    <ClInclude Include="pch.h">
+      <Filter>소스 파일\헤더</Filter>
+    </ClInclude>
+    <ClInclude Include="TimeManager.h">
+      <Filter>소스 파일\03.TIME</Filter>
+    </ClInclude>
+    <ClInclude Include="Defines.h">
+      <Filter>소스 파일\헤더</Filter>
+    </ClInclude>
+    <ClInclude Include="Types.h">
+      <Filter>소스 파일\헤더</Filter>
+    </ClInclude>
+    <ClInclude Include="KeyManager.h">
+      <Filter>소스 파일\02.KEYBOARD</Filter>
+    </ClInclude>
+    <ClInclude Include="Enums.h">
+      <Filter>소스 파일\헤더</Filter>
+    </ClInclude>
+    <ClInclude Include="Stage1.h">
+      <Filter>소스 파일\04.SCENE</Filter>
+    </ClInclude>
+    <ClInclude Include="SceanManager.h">
+      <Filter>소스 파일\04.SCENE</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene.h">
+      <Filter>소스 파일\04.SCENE</Filter>
+    </ClInclude>
+    <ClInclude Include="Object.h">
+      <Filter>소스 파일\05.OBJECT</Filter>
+    </ClInclude>
+    <ClInclude Include="BackGround.h">
+      <Filter>소스 파일\05.OBJECT</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>소스 파일\05.OBJECT</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjectManager.h">
+      <Filter>소스 파일\05.OBJECT</Filter>
+    </ClInclude>
+    <ClInclude Include="Misile.h">
+      <Filter>소스 파일\05.OBJECT</Filter>
+    </ClInclude>
+    <ClInclude Include="잡다한것.h" />
+    <ClInclude Include="Tile.h">
+      <Filter>소스 파일\05.OBJECT</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
