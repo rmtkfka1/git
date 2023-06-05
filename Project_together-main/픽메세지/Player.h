@@ -43,6 +43,11 @@ public:
 
 	CImage			player1_img_left;
 	CImage			player1_img_right;
+	CImage          fire_img;
+
+	BOOL			FIRE;
+	int			fire_count = 0;
+
 	Motion			_motionP1;
 
 	HDC				mdcP1;

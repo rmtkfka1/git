@@ -8,7 +8,7 @@
 #include "BackGround.h"
 #include "Misile.h"
 #include "ObjectManager.h"
-
+#include "Tile.h"
 void Player::Render(HDC mdc) {}
 void Player::Init() {}
 
@@ -43,6 +43,7 @@ void Player::Init(BackGround* background) {
 
 	player2_img_left.Load(L"리소스\\ch2\\LEFT.png");
 	player2_img_right.Load(L"리소스\\ch2\\RIGHT.png");
+	fire_img.Load(L"리소스\\fire.png");
 
 	_posP2 = { WINDOW_WIDTH / 2, WINDOW_HEIGHT - 200 };
 	_RenderPosP2 = _posP2;
@@ -72,7 +73,7 @@ void Player::Init(BackGround* background) {
 	temp2 = 0.0f;
 	g_bJumpkeyPressed1 = FALSE;	//	점프 키 Space bar가 눌리면 TRUE로 변경
 
-
+	FIRE = FALSE;
 
 
 }
@@ -81,7 +82,6 @@ void Player::Init(BackGround* background) {
 void Player::Update() {
 	
 	
-
 	float deletaTime = GET_SINGLE(TimeManager)->GetDeltaTime(); //프레임동기화 (컴퓨터마다 속도를 똑같이맞춰줌)
 
 	if (GET_SINGLE(KeyManager)->Getbutton(KeyType::I))
@@ -93,13 +93,19 @@ void Player::Update() {
 
 	const vector<BackGround*>& bk = GET_SINGLE(ObjectManager)->GetBackGround();   //벡터를 가져오는것
 	BackGround* background = bk[0];
+	
+	fire_count += 1;
+	fire_count %= 12;
 
 	// player1
 	// =========================================================================================
 
-	if (GET_SINGLE(KeyManager)->Getbutton(KeyType::A))
+	if (!FIRE)
 	{
-		
+
+		if (GET_SINGLE(KeyManager)->Getbutton(KeyType::A))
+		{
+
 			_motionP1 = Motion::LEFT;
 			_posP1.x -= _stat.speed * deletaTime;
 			_motion_cntP1 = (_motion_cntP1 + 1) % 6;
@@ -108,12 +114,12 @@ void Player::Update() {
 				_RenderPosP1.x -= _stat.speed * deletaTime;
 			else if (_posP1.x > background->background_img.GetWidth() * 1.8)
 				_RenderPosP1.x -= _stat.speed * deletaTime;
-		
-	}
 
-	if (GET_SINGLE(KeyManager)->Getbutton(KeyType::D))
-	{
-		
+		}
+
+		if (GET_SINGLE(KeyManager)->Getbutton(KeyType::D))
+		{
+
 			_motionP1 = Motion::RIGHT;
 			_posP1.x += _stat.speed * deletaTime;
 			_motion_cntP1 = (_motion_cntP1 + 1) % 6;
@@ -123,82 +129,84 @@ void Player::Update() {
 				_RenderPosP1.x += _stat.speed * deletaTime;
 			else if (_posP1.x > background->background_img.GetWidth() * 1.8)
 				_RenderPosP1.x += _stat.speed * deletaTime;
-		
-
-	}
-
-	if (GET_SINGLE(KeyManager)->Getbutton(KeyType::W))
-	{
-		_motionP1 = Motion::RIGHT;
-		_posP1.y -= _stat.speed * deletaTime;
-		_motion_cntP1 = (_motion_cntP1 + 1) % 6;
-
-	}
-
-	if (GET_SINGLE(KeyManager)->Getbutton(KeyType::S))
-	{
-		_motionP1 = Motion::RIGHT;
-		_posP1.y += _stat.speed * deletaTime;
-		_motion_cntP1 = (_motion_cntP1 + 1) % 6;
-
-	}
-
-	if (GET_SINGLE(KeyManager)->Getbutton(KeyType::F))
-	{
-		g_bJumpkeyPressed1 = TRUE;
-	}
-
-	if (GET_SINGLE(KeyManager)->GetbuttonDown(KeyType::G))
-	{
-		Missile* missle = GET_SINGLE(ObjectManager)->CreateObject<Missile>();
-		missle->Init();
-
-		missle->SetPos(Pos(_posP1.x, _posP1.y)); //주인공 객체에서 생성
 
 
-		if (_motionP1 == Motion::RIGHT)
-		{
-			missle->SetMotion(Bullet_Dir::RIGHT);
 		}
 
-		else if (_motionP1 == Motion::LEFT)
+		if (GET_SINGLE(KeyManager)->Getbutton(KeyType::W))
 		{
-			missle->SetMotion(Bullet_Dir::LEFT);
+			_motionP1 = Motion::RIGHT;
+			_posP1.y -= _stat.speed * deletaTime;
+			_motion_cntP1 = (_motion_cntP1 + 1) % 6;
+
 		}
 
-		GET_SINGLE(ObjectManager)->Add(missle);
-	}
+		if (GET_SINGLE(KeyManager)->Getbutton(KeyType::S))
+		{
+			_motionP1 = Motion::RIGHT;
+			_posP1.y += _stat.speed * deletaTime;
+			_motion_cntP1 = (_motion_cntP1 + 1) % 6;
 
-	// player2
-	// ==============================================================================
-	if (GET_SINGLE(KeyManager)->Getbutton(KeyType::Left))
-	{
-		_motionP2 = Motion::LEFT;
-		_posP2.x -= _stat.speed * deletaTime;
-		_motion_cntP2 = (_motion_cntP2 + 1) % 6;
+		}
 
-		if (_posP2.x < WINDOW_WIDTH / 2) 
-			_RenderPosP2.x -= _stat.speed * deletaTime;
-		
-	}
+		if (GET_SINGLE(KeyManager)->Getbutton(KeyType::F))
+		{
+			g_bJumpkeyPressed1 = TRUE;
+		}
 
-	if (GET_SINGLE(KeyManager)->Getbutton(KeyType::Right))
-	{
-		_motionP2 = Motion::RIGHT;
-		_posP2.x += _stat.speed * deletaTime;
-		_motion_cntP2 = (_motion_cntP2 + 1) % 6;
+		if (GET_SINGLE(KeyManager)->GetbuttonDown(KeyType::G))
+		{
+			Missile* missle = GET_SINGLE(ObjectManager)->CreateObject<Missile>();
+			missle->Init();
+
+			missle->SetPos(Pos(_posP1.x, _posP1.y)); //주인공 객체에서 생성
 
 
-		if (_posP2.x < WINDOW_WIDTH / 2) 
-			_RenderPosP2.x += _stat.speed * deletaTime;
-		
+			if (_motionP1 == Motion::RIGHT)
+			{
+				missle->SetMotion(Bullet_Dir::RIGHT);
+			}
 
-		
-	}
+			else if (_motionP1 == Motion::LEFT)
+			{
+				missle->SetMotion(Bullet_Dir::LEFT);
+			}
 
-	if (GET_SINGLE(KeyManager)->Getbutton(KeyType::J))
-	{
-		g_bJumpkeyPressed2 = TRUE;
+			GET_SINGLE(ObjectManager)->Add(missle);
+		}
+
+		// player2
+		// ==============================================================================
+		if (GET_SINGLE(KeyManager)->Getbutton(KeyType::Left))
+		{
+			_motionP2 = Motion::LEFT;
+			_posP2.x -= _stat.speed * deletaTime;
+			_motion_cntP2 = (_motion_cntP2 + 1) % 6;
+
+			if (_posP2.x < WINDOW_WIDTH / 2)
+				_RenderPosP2.x -= _stat.speed * deletaTime;
+
+		}
+
+		if (GET_SINGLE(KeyManager)->Getbutton(KeyType::Right))
+		{
+			_motionP2 = Motion::RIGHT;
+			_posP2.x += _stat.speed * deletaTime;
+			_motion_cntP2 = (_motion_cntP2 + 1) % 6;
+
+
+			if (_posP2.x < WINDOW_WIDTH / 2)
+				_RenderPosP2.x += _stat.speed * deletaTime;
+
+
+
+		}
+
+		if (GET_SINGLE(KeyManager)->Getbutton(KeyType::J))
+		{
+			g_bJumpkeyPressed2 = TRUE;
+		}
+
 	}
 
 	CameraGap();
@@ -230,7 +238,6 @@ void Player::Update() {
 
 
 
-
 }
 
 void Player::CRender(HDC mdc) {
@@ -242,37 +249,49 @@ void Player::CRender(HDC mdc) {
 	mdcP1 = CreateCompatibleDC(mdc);
 	SelectObject(mdcP1, (HBITMAP)hBitmapP1);
 
-	if (_motionP1 == Motion::LEFT)
+	if (!FIRE)
 	{
-		player1_img_left.Draw(mdcP1, 0, 0, size.x, size.y, _motion_cntP1 * 32, 0, 32, 32);
-	}
+		if (_motionP1 == Motion::LEFT)
+		{
+			player1_img_left.Draw(mdcP1, 0, 0, size.x, size.y, _motion_cntP1 * 32, 0, 32, 32);
+		}
 
-	if (_motionP1 == Motion::RIGHT)
+		if (_motionP1 == Motion::RIGHT)
+		{
+			player1_img_right.Draw(mdcP1, 0, 0, size.x, size.y, _motion_cntP1 * 32, 0, 32, 32);
+
+		}
+
+	}
+	else
 	{
-		player1_img_right.Draw(mdcP1, 0, 0, size.x, size.y, _motion_cntP1 * 32, 0, 32, 32);
-
+		fire_img.Draw(mdcP1, 0, 0, size.x, size.y, fire_count * 48, 0, 48, 48);
 	}
-
-
 	// player2
 	// ====================================
 
+	
 	hBitmapP2 = CreateCompatibleBitmap(mdc, WINDOW_WIDTH, WINDOW_HEIGHT);
 	mdcP2 = CreateCompatibleDC(mdc);
 	SelectObject(mdcP2, (HBITMAP)hBitmapP2);
 
-	if (_motionP2 == Motion::LEFT)
-	{
-		player2_img_left.Draw(mdcP2, 0, 0, size.x, size.y, _motion_cntP2 * 32, 0, 32, 32);
+	if (!FIRE) {
+		if (_motionP2 == Motion::LEFT)
+		{
+			player2_img_left.Draw(mdcP2, 0, 0, size.x, size.y, _motion_cntP2 * 32, 0, 32, 32);
+		}
+
+		if (_motionP2 == Motion::RIGHT)
+		{
+			player2_img_right.Draw(mdcP2, 0, 0, size.x, size.y, _motion_cntP2 * 32, 0, 32, 32);
+
+		}
 	}
 
-	if (_motionP2 == Motion::RIGHT)
+	else
 	{
-		player2_img_right.Draw(mdcP2, 0, 0, size.x, size.y, _motion_cntP2 * 32, 0, 32, 32);
-
+		fire_img.Draw(mdcP2, 0, 0, size.x, size.y, fire_count*48, 0, 48, 48);
 	}
-
-
 
 
 	if (_divide == false) {
