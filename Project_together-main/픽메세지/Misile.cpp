@@ -56,13 +56,13 @@ void Missile::Update()
 		if (IntersectRect(&intersect_rect, &missile_rect, &p2_rect))
 		{
 			
+			p->CollisionGap();
+
 			Pos temp = p->_posP2;
 			p->_posP2 = p->_posP1;
 			p->_posP1 = temp;
-
-	
-		
 			p->FIRE = true;
+
 			GET_SINGLE(ObjectManager)->Remove(msilles[i]);   //벡터를 가져오는것
 
 		

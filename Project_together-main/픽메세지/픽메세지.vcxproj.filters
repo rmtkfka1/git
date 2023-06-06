@@ -75,6 +75,9 @@
     <ClCompile Include="Tile.cpp">
       <Filter>소스 파일\05.OBJECT</Filter>
     </ClCompile>
+    <ClCompile Include="Tile_Moving.cpp">
+      <Filter>소스 파일\05.OBJECT</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GAME.h">
@@ -130,6 +133,9 @@
       <Filter>소스 파일\05.OBJECT</Filter>
     </ClInclude>
     <ClInclude Include="Tile.h">
+      <Filter>소스 파일\05.OBJECT</Filter>
+    </ClInclude>
+    <ClInclude Include="Tile_Moving.h">
       <Filter>소스 파일\05.OBJECT</Filter>
     </ClInclude>
   </ItemGroup>

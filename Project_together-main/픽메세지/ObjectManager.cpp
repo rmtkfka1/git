@@ -5,6 +5,8 @@
 #include "Tile_P1.h"
 #include "Tile_P2.h"
 #include "Tile.h"
+#include "Tile_Moving.h"
+
 
 ObjectManager::~ObjectManager()
 {
@@ -103,6 +105,21 @@ void ObjectManager::Add(Tile_P2* object)
 
 }
 
+void ObjectManager::Add(Tile_Moving* object)
+{
+
+	if (object == nullptr) return;
+
+	//객체 중복검사
+	auto findit = std::find(_vTileMove.begin(), _vTileMove.end(), object);
+
+	if (findit != _vTileMove.end())
+		return;
+	//////////////////////////////////////
+	_vTileMove.push_back(object);
+
+}
+
 
 void ObjectManager::Remove(Player* object)
 {
@@ -197,6 +214,21 @@ void ObjectManager::Remove(Tile_P2* object)
 
 }
 
+void ObjectManager::Remove(Tile_Moving* object)
+{
+	if (object == nullptr)
+		return;
+
+	//벡터내에서 삭제//////////////////////////////
+	auto it = std::remove(_vTileMove.begin(), _vTileMove.end(), object);
+
+	_vTileMove.erase(it, _vTileMove.end());
+	//////////////////////////////////////////
+
+	//메모리 삭제
+	delete object;
+}
+
 void ObjectManager::Clear()
 {
 	//벡터내에 모든 메모리삭제
@@ -205,6 +237,7 @@ void ObjectManager::Clear()
 	std::for_each(_vTile.begin(), _vTile.end(), [=](Tile* obj) {delete obj; });
 	std::for_each(_vTileP1.begin(), _vTileP1.end(), [=](Tile_P1* obj) {delete obj; });
 	std::for_each(_vTileP2.begin(), _vTileP2.end(), [=](Tile_P2* obj) {delete obj; });
+	std::for_each(_vTileMove.begin(), _vTileMove.end(), [=](Tile_Moving* obj) {delete obj; });
 	std::for_each(_vmissile.begin(), _vmissile.end(), [=](Missile* obj) {delete obj; });
 
 
@@ -214,6 +247,7 @@ void ObjectManager::Clear()
 	_vTile.clear();
 	_vTileP1.clear();
 	_vTileP2.clear();
+	_vTileMove.clear();
 	_vmissile.clear();
 
 }

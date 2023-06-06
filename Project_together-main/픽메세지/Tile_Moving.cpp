@@ -1,4 +1,5 @@
 #include "pch.h"
+#include "Tile_Moving.h"
 #include "Tile.h"
 #include "ObjectManager.h"
 #include "Player.h"
@@ -7,37 +8,123 @@
 #include "Tile_P2.h"
 
 
-Tile::Tile() :Object(ObjectType::TILE)
+Tile_Moving::Tile_Moving() :Object(ObjectType::TILE)
 {
 
 
 }
 
 
-Tile::~Tile()
+Tile_Moving::~Tile_Moving()
 {
+
     tile_img.Destroy();
-
 }
 
-void Tile::Init()
+void Tile_Moving::Init()
 {
-    tile_img.Load(L"리소스\\타일2.png");
+    tile_img.Load(L"리소스\\moving_tile.png");
 
-    size.x = 25;
-    size.y = 35;
+    size.x = 40;
+    size.y = 30;
 
+    _move_range = Pos(200, 200);
+    _stat.speed = 1;
+    //_first_move_renge = _move_range;
+    _isMovingUp = false; // 초기 이동 방향 설정
+    _isMovingLeft = true;
+    _DoyouWant_UP = true;
 }
 
-void Tile::Update()
+void Tile_Moving::Update()
 {
+    
+                           
+    //if (_isMovingUp)
+    //{
+    //    _pos.y -= 1; // 위로 이동
+    //    // 상한 범위 도달 시 방향 전환
+    //    if (_pos.y <= _first_move_renge.y - _move_range.y)
+    //    {
+    //        _isMovingUp = false;
+    //    }
+    //}
+    //// 아래로 이동하는 경우
+    //else
+    //{
+    //    _pos.y += 1; // 아래로 이동
+
+    //    // 하한 범위 도달 시 방향 전환
+    //    if (_pos.y >= _first_move_renge.y + _move_range.y)
+    //    {
+    //        _isMovingUp = true;
+    //    }
+    //}
+    if (_DoyouWant_UP)
+    {
+        {
+
+            static int counting = 0;
+            if (_isMovingUp)
+            {
+                counting++;
+                _pos.y -= 2;
+
+                if (counting == _move_range.y / 2)
+                {
+                    counting = 0;
+                    _isMovingUp = false;
+                }
+            }
+            else
+            {
+                counting++;
+                _pos.y += 2;
+                if (counting == _move_range.y / 2)
+                {
+                    counting = 0;
+                    _isMovingUp = true;
+                }
+
+            }
+        }
+    }
+
+    else
+    {
+        {
+            static int counting = 0;
+            if (_isMovingLeft)
+            {
+                counting++;
+                _pos.x -= 1;
+
+                if (counting == _move_range.x)
+                {
+                    counting = 0;
+                    _isMovingLeft = false;
+                }
+            }
+            else
+            {
+                counting++;
+                _pos.x += 1;
+                if (counting == _move_range.x)
+                {
+                    counting = 0;
+                    _isMovingLeft = true;
+                }
+            }
+        }
+    }
+
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////
     {
         const vector<Player*>& player = GET_SINGLE(ObjectManager)->GetPlayer();  //벡터를 가져오는
 
         Player* p = player[0];
 
-        const vector<Tile*>& tiles = GET_SINGLE(ObjectManager)->GetTile();   //벡터를 가져오는것
-
+        const vector<Tile_Moving*>& tiles = GET_SINGLE(ObjectManager)->GetTile_Moving();   //벡터를 가져오는것
 
         for (int i = 0; i < tiles.size(); ++i)
         {
@@ -80,23 +167,17 @@ void Tile::Update()
                     }
                 }
 
-
-        
-
-    
             }
-
-          
         }
     }
 
-
+    //////////////////////////////////////////////////////////////////////////////////////////////////////
     {
         const vector<Player*>& player = GET_SINGLE(ObjectManager)->GetPlayer();  //벡터를 가져오는
 
         Player* p = player[0];
 
-        const vector<Tile*>& tiles = GET_SINGLE(ObjectManager)->GetTile();   //벡터를 가져오는것
+        const vector<Tile_Moving*>& tiles = GET_SINGLE(ObjectManager)->GetTile_Moving();   //벡터를 가져오는것
 
         for (int i = 0; i < tiles.size(); ++i)
         {
@@ -140,21 +221,17 @@ void Tile::Update()
                     }
                 }
 
-                p->rand1 = true;
-                p->rand2 = true;
             }
-
         }
-
-       
     }
 
 
 }
 
-void Tile::Render(HDC mdc)
+
+void Tile_Moving::Render(HDC mdc)
 {
-    
+
 
     const vector<Player*>& player = GET_SINGLE(ObjectManager)->GetPlayer();  //벡터를 가져오는
 
@@ -173,11 +250,10 @@ void Tile::Render(HDC mdc)
     mdc2 = CreateCompatibleDC(mdc);
     SelectObject(mdc2, (HBRUSH)hBitmap2);
 
-
     tile_img.Draw(mdc2, 0, 0, tile_img.GetWidth(), tile_img.GetHeight()
         , 0, 0, tile_img.GetWidth(), tile_img.GetHeight());
 
-    TransparentBlt(mdc, _Renderpos.x, _Renderpos.y, size.x,size.y,
+    TransparentBlt(mdc, _Renderpos.x, _Renderpos.y, size.x, size.y,
         mdc2, 0, 0, tile_img.GetWidth(), tile_img.GetHeight(), RGB(0, 0, 0));
 
     DeleteDC(mdc2);

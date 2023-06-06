@@ -32,6 +32,7 @@ public:
 
 	/// 카메라 이동 전환 처리
 	void CameraGap();
+	void CollisionGap();
 
 
 public:
@@ -46,6 +47,7 @@ public:
 	CImage          fire_img;
 
 	BOOL			FIRE;
+	BOOL            Rand1;
 	int			fire_count = 0;
 
 	Motion			_motionP1;
@@ -60,7 +62,7 @@ public:
 	Pos				_CenterPosP2{};		// 중심위치
 	Pos				_DiffP2{};			// 실제 위치와 윈도우 창 위치에 차이 값
 	int				_motion_cntP2{ };
-
+	BOOL            Rand2;
 	CImage			player2_img_left;
 	CImage			player2_img_right;
 
@@ -96,7 +98,9 @@ public:
 
 	WCHAR test[100];
 
-
+	// 카메라 추가 부분
+	float _collisionLeftP1{};
+	float _collisionLeftP2{};
 
 };
 

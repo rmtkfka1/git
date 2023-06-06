@@ -15,15 +15,15 @@ Tile_P1::Tile_P1() :Object(ObjectType::TILE)
 
 Tile_P1::~Tile_P1()
 {
-
+    tile_img.Destroy();
 }
 
 void Tile_P1::Init()
 {
     tile_img.Load(L"¸®¼Ò½º\\p1_tile.png");
 
-    size.x = 46;
-    size.y = 31;
+    size.x = 25;
+    size.y = 25;
 }
 
 void Tile_P1::Update()

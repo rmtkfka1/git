@@ -41,3 +41,10 @@ public:												\
     GET_SINGLE(ObjectManager)->Add(tile);								\
 } while(0)
           
+
+#define MakeTile_Moving(X,Y) do {											          \
+   Tile_Moving* moving_tile = GET_SINGLE(ObjectManager)->CreateObject<Tile_Moving>(); \
+   moving_tile->SetPos(Pos(X, Y));									                  \
+   moving_tile->Init();													              \
+   GET_SINGLE(ObjectManager)->Add(moving_tile);								          \
+} while(0)

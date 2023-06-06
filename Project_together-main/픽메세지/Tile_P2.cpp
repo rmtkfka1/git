@@ -14,15 +14,15 @@ Tile_P2::Tile_P2() :Object(ObjectType::TILE)
 
 Tile_P2::~Tile_P2()
 {
-
+    tile_img.Destroy();
 }
 
 void Tile_P2::Init()
 {
     tile_img.Load(L"¸®¼Ò½º\\p2_tile.png");
 
-    size.x = 46;
-    size.y = 90;
+    size.x = 40;
+    size.y = 40;
 }
 
 void Tile_P2::Update()

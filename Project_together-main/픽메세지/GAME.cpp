@@ -41,6 +41,14 @@ void GAME::Render()
 {
 	GET_SINGLE(SceneManager)->Render(mdc);
 
+
+	{
+		POINT MOUSEPOSE = GET_SINGLE(KeyManager)->GetMousePos();
+
+		wstring str = std::format(L"Mouse({0},{1})", MOUSEPOSE.x, MOUSEPOSE.y);
+		TextOut(mdc, 0, 0, str.c_str(), static_cast<int32>(str.size()));
+	}
+
 	BitBlt(hdc, 0, 0, WINDOW_WIDTH, WINDOW_HEIGHT, mdc, 0, 0, SRCCOPY);
 	PatBlt(mdc, 0, 0, WINDOW_WIDTH, WINDOW_HEIGHT, WHITENESS); // INVAILDRECT 대체 하는 함수
 }

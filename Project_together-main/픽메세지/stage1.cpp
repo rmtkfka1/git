@@ -9,6 +9,7 @@
 #include "Tile_P1.h"
 #include "Tile_P2.h"
 #include "Tile.h"
+#include "Tile_Moving.h"
 
 Stage1::~Stage1()
 {
@@ -42,22 +43,127 @@ void Stage1::Init()
 	tile2->SetSize(Pos(700, 3000));
 	GET_SINGLE(ObjectManager)->Add(tile2);
 
+	//벽쪽추가
+	{
+		Tile* tile2 = GET_SINGLE(ObjectManager)->CreateObject<Tile>();
+		tile2->SetPos(Pos(0, -1000));
+		tile2->Init();
+		tile2->SetSize(Pos(620, 3000));
+		GET_SINGLE(ObjectManager)->Add(tile2);
+	}
+
+
+	{
+		Tile* tile2 = GET_SINGLE(ObjectManager)->CreateObject<Tile>();
+		tile2->SetPos(Pos(2600, 170));
+		tile2->Init();
+		tile2->SetSize(Pos(70, 40));
+		GET_SINGLE(ObjectManager)->Add(tile2);
+	}
+
+	for (int i = 0; i < 5; ++i)
+	{
+		MakeTile(2600 + (i + 1) * 100, 70-(i*100));
+	}
+
+
+	//끝에티어나온거
+	{
+		Tile* tile = GET_SINGLE(ObjectManager)->CreateObject<Tile>();
+		tile->SetPos(Pos(3320, -400));
+		tile->Init();
+		tile->SetSize(Pos(80, 50));
+		GET_SINGLE(ObjectManager)->Add(tile);
+	}
+
+	{
+
+		Tile* tile = GET_SINGLE(ObjectManager)->CreateObject<Tile>();
+		tile->SetPos(Pos(2600, -400));
+		tile->Init();
+		tile->SetSize(Pos(80, 50));
+		GET_SINGLE(ObjectManager)->Add(tile);
+	}
+
+
+	{
+
+		Tile* tile = GET_SINGLE(ObjectManager)->CreateObject<Tile>();
+		tile->SetPos(Pos(2450, -400));
+		tile->Init();
+		tile->SetSize(Pos(50, 50));
+		GET_SINGLE(ObjectManager)->Add(tile);
+	}
+
+	{
+		Tile* tile = GET_SINGLE(ObjectManager)->CreateObject<Tile>();
+		tile->SetPos(Pos(2300, -520));
+		tile->Init();
+		tile->SetSize(Pos(50, 50));
+		GET_SINGLE(ObjectManager)->Add(tile);
+	}
+
+
+	{
+		Tile* tile = GET_SINGLE(ObjectManager)->CreateObject<Tile>();
+		tile->SetPos(Pos(2200, 0));
+		tile->Init();
+		tile->SetSize(Pos(100, 50));
+		GET_SINGLE(ObjectManager)->Add(tile);
+	}
+
+	for (int i = 0; i < 6; ++i)
+	{
+		MakeTile(1400 + (i + 1) * 100, -520);
+	}
 
 
 	//============================ Tile_P1 만들기 ==============================//
 	{
 
-		MakeTile_P1(1000, 400);
+		MakeTile_P1(3200, -530);
+
+		MakeTile_P1(3100, -530);
+
+		MakeTile_P1(3000, -530);
+
+
+		MakeTile_P1(2800, -530);
+
+
+		MakeTile_P1(2750, -320);
+
+
 
 	}
 	//============================ Tile_P2 만들기 ==============================//
 	{
 
-		MakeTile_P2(800, 400);
-		MakeTile_P2(900, 300);
-		MakeTile_P2(1100, 200);
+	
 
 	}
+
+	//============================ Moving_Tile 만들기  ===========================//
+
+	{
+		Tile_Moving* moving_tile = GET_SINGLE(ObjectManager)->CreateObject<Tile_Moving>();
+		moving_tile->Init();
+		moving_tile->_move_range = Pos(250, 250);
+		moving_tile->SetPos(Pos(3200, 170));
+		GET_SINGLE(ObjectManager)->Add(moving_tile);
+	}
+
+	{
+		Tile_Moving* moving_tile2 = GET_SINGLE(ObjectManager)->CreateObject<Tile_Moving>();
+		moving_tile2->Init();
+		moving_tile2->_move_range = Pos(250,250);
+		moving_tile2->_DoyouWant_UP = false;
+		moving_tile2->SetSize(Pos(50, 40));
+		moving_tile2->SetPos(Pos(3000, 170));
+		GET_SINGLE(ObjectManager)->Add(moving_tile2);
+	}
+
+
 
 }
 
@@ -99,6 +205,12 @@ void Stage1::Update()
 	for (int i = 0; i < tiles_p2.size(); ++i)
 	{
 		tiles_p2[i]->Update();
+	}
+
+	const vector<Tile_Moving*> moving_tile = GET_SINGLE(ObjectManager)->GetTile_Moving();
+	for (int i = 0; i < moving_tile.size(); ++i)
+	{
+		moving_tile[i]->Update();
 	}
 
 
@@ -143,6 +255,12 @@ void Stage1::Render(HDC mdc)
 		misile->Render(mdc);
 	}
 
+
+	const vector<Tile_Moving*> moving_tile = GET_SINGLE(ObjectManager)->GetTile_Moving();
+	for (int i = 0; i < moving_tile.size(); ++i)
+	{
+		moving_tile[i]->Render(mdc);
+	}
 
 
 };
