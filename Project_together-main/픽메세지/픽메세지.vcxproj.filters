@@ -66,6 +66,12 @@
     <ClCompile Include="Misile.cpp">
       <Filter>소스 파일\05.OBJECT</Filter>
     </ClCompile>
+    <ClCompile Include="Tile_P1.cpp">
+      <Filter>소스 파일\05.OBJECT</Filter>
+    </ClCompile>
+    <ClCompile Include="Tile_P2.cpp">
+      <Filter>소스 파일\05.OBJECT</Filter>
+    </ClCompile>
     <ClCompile Include="Tile.cpp">
       <Filter>소스 파일\05.OBJECT</Filter>
     </ClCompile>
@@ -117,6 +123,12 @@
       <Filter>소스 파일\05.OBJECT</Filter>
     </ClInclude>
     <ClInclude Include="잡다한것.h" />
+    <ClInclude Include="Tile_P1.h">
+      <Filter>소스 파일\05.OBJECT</Filter>
+    </ClInclude>
+    <ClInclude Include="Tile_P2.h">
+      <Filter>소스 파일\05.OBJECT</Filter>
+    </ClInclude>
     <ClInclude Include="Tile.h">
       <Filter>소스 파일\05.OBJECT</Filter>
     </ClInclude>

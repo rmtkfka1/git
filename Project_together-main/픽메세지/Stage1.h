@@ -16,7 +16,6 @@ public:
 	virtual void Render(HDC mdc) override;
 
 
-
 public:
 
 };

@@ -60,9 +60,7 @@ void Missile::Update()
 			p->_posP2 = p->_posP1;
 			p->_posP1 = temp;
 
-			Pos render_temp = p->_RenderPosP2;
-			p->_RenderPosP2 = p->_RenderPosP1;
-			p->_RenderPosP1 = render_temp;
+	
 		
 			p->FIRE = true;
 			GET_SINGLE(ObjectManager)->Remove(msilles[i]);   //벡터를 가져오는것

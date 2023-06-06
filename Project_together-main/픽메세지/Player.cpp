@@ -8,7 +8,8 @@
 #include "BackGround.h"
 #include "Misile.h"
 #include "ObjectManager.h"
-#include "Tile.h"
+#include "Tile_P2.h"
+#include "Tile_P1.h"
 void Player::Render(HDC mdc) {}
 void Player::Init() {}
 
@@ -42,41 +43,46 @@ void Player::Init(BackGround* background) {
 	_RenderPosP1 = _posP1;
 	_CenterPosP1 = _posP1;
 
+
 	player2_img_left.Load(L"리소스\\ch2\\LEFT.png");
 	player2_img_right.Load(L"리소스\\ch2\\RIGHT.png");
 	fire_img.Load(L"리소스\\fire.png");
+
+	JumpTime1 = 0.f;
+	JumpHeight1 = 0;
+	jumpPower1 = 45.0f;
+	temp1 = 0.0f;
+	g_bJumpkeyPressed1 = FALSE;	//	점프 키 Space bar가 눌리면 TRUE로 변경
+	Gravity1 = true;
+
+
+	_motionP1 = Motion::RIGHT;
+//==============================================================================//
 
 	_posP2 = { WINDOW_WIDTH / 2, WINDOW_HEIGHT - 200 };
 	_RenderPosP2 = _posP2;
 	_CenterPosP2 = _posP2;
 
-	size.x = 32;
-	size.y = 32;
-
-	_stat.speed = 200;
-
-	_motionP1 = Motion::RIGHT;
 	_motionP2 = Motion::RIGHT;
-
-
-	//JumpTime1 = 0;
-	//g_bJumpkeyPressed1 = FALSE;	//	점프 키 Space bar가 눌리면 TRUE로 변경
-	JumpTime1 = 0.f;
-	JumpHeight1 = 0;
-	jumpPower1 = 60.f;
-	temp1 = 0.0f;
-	g_bJumpkeyPressed1 = FALSE;	//	점프 키 Space bar가 눌리면 TRUE로 변경
 
 
 	JumpTime2 = 0.f;
 	JumpHeight2 = 0;
-	jumpPower2 = 60.f;
+	jumpPower2 = 45.0f;
 	temp2 = 0.0f;
-	g_bJumpkeyPressed1 = FALSE;	//	점프 키 Space bar가 눌리면 TRUE로 변경
+	Gravity2 = true;
+	g_bJumpkeyPressed2 = FALSE;	//	점프 키 Space bar가 눌리면 TRUE로 변경
 
+
+	
+//=================================================================================//
+
+//공용
+	size.x = 32;
+	size.y = 32;
+
+	_stat.speed = 300;
 	FIRE = FALSE;
-
-
 }
 
 
@@ -114,7 +120,7 @@ void Player::Update() {
 			if (_posP1.x < WINDOW_WIDTH / 2)
 				_RenderPosP1.x -= _stat.speed * deletaTime;
 			else if (_posP1.x > background->background_img.GetWidth() * 1.8)
-				_RenderPosP1.x -= _stat.speed * deletaTime;
+				_RenderPosP1.x -= _stat.speed * deletaTime ;
 
 		}
 
@@ -127,17 +133,15 @@ void Player::Update() {
 
 
 			if (_posP1.x < WINDOW_WIDTH / 2)
-				_RenderPosP1.x += _stat.speed * deletaTime;
+				_RenderPosP1.x += _stat.speed * deletaTime ;
 			else if (_posP1.x > background->background_img.GetWidth() * 1.8)
-				_RenderPosP1.x += _stat.speed * deletaTime;
-
-
+				_RenderPosP1.x += _stat.speed * deletaTime ;
 		}
 
 		if (GET_SINGLE(KeyManager)->Getbutton(KeyType::W))
 		{
 			_motionP1 = Motion::RIGHT;
-			_posP1.y -= _stat.speed * deletaTime;
+			_posP1.y -= _stat.speed*10 * deletaTime;
 			_motion_cntP1 = (_motion_cntP1 + 1) % 6;
 
 		}
@@ -212,31 +216,32 @@ void Player::Update() {
 
 	CameraGap();
 
-	//if (isfalling1)
-	//{
-	//	_posP1.y += 3;
-	//}
 
 	jump1();
 	jump2();
 
-
-	//중력부분 나중에 수정할거
-	_posP1.y += 3;
-	_posP2.y += 3;
-
+	if (Gravity1)
+	{
+	_posP1.y += 10;
+	}
+	if (Gravity2)
+	{
+	_posP2.y += 10;
+	}
+	//_posP1.y += 3;
+	//_posP2.y += 3;
 
 	//임시로 막아둔것
 	if (_posP1.y >= 439)
 	{
 		_posP1.y = 439;
+		
 	}
 
 	if (_posP2.y >= 439)
 	{
 		_posP2.y = 439;
 	}
-
 
 
 }
@@ -331,7 +336,6 @@ void Player::CRender(HDC mdc) {
 			TransparentBlt(mdc, 0, 0, WINDOW_WIDTH, WINDOW_HEIGHT / 2,
 				P1, 0, 0, WINDOW_WIDTH, WINDOW_HEIGHT, RGB(0, 0, 0));
 
-
 			DeleteObject(mapP1);
 			DeleteDC(P1);
 
@@ -364,17 +368,16 @@ void Player::CRender(HDC mdc) {
 	}
 
 
-
-	swprintf_s(test, L"p1->x :%.1f", _posP1.x);
+	swprintf_s(test, L"p1->y :%.1f", _posP1.x);
 	TextOut(mdc, 0, 0, test, lstrlen(test)); 
 
-	swprintf_s(test, L"p1->pos+size :%.1f", _posP1.x +size.x);
+	swprintf_s(test, L"p2->y :%.1f", _posP2.x);
 	TextOut(mdc, 0, 20, test, lstrlen(test));
 
 	swprintf_s(test, L"renderp1->x :%.1f", _RenderPosP1.x);
 	TextOut(mdc, 0, 35, test, lstrlen(test));
 
-	swprintf_s(test, L"renderp1->y :%.1f", _RenderPosP1.y);
+	swprintf_s(test, L"renderp2->y :%.1f", _RenderPosP2.x);
 	TextOut(mdc, 0, 50, test, lstrlen(test));
 	
 	DeleteObject(hBitmapP1);
@@ -446,30 +449,33 @@ void Player::GapUpdate(KeyType key)
 
 void Player::jump1()
 {
-	
+
 	if (!g_bJumpkeyPressed1) return;
-	JumpHeight1 = (JumpTime1 * JumpTime1 - jumpPower1 * JumpTime1) / 4.f;
+	Gravity1 = false;
+	JumpHeight1 = (JumpTime1 * JumpTime1 - jumpPower1 * JumpTime1) / 4.0f ;
 	_posP1.y += JumpHeight1 - temp1;
 	temp1 = JumpHeight1;
 
 	JumpTime1 += 0.75f;		//값을 올리면 점프속도가 빨라짐
 
-	if (rand1)
-	{
-		JumpTime1 = 0.f;
-		JumpHeight1 = 0;
-		jumpPower1 = 60.f;
-		temp1 = 0.0f;
-		g_bJumpkeyPressed1 = FALSE;
-		return;
-	}
+	//if (rand1)
+	//{
+	//	JumpTime1 = 0.f;
+	//	JumpHeight1 = 0;
+	//	jumpPower1 = 60.f;
+	//	temp1 = 0.0f;
+	//	g_bJumpkeyPressed1 = FALSE;
+	//	return;
+	//}
+	
 
 	if (JumpTime1 > jumpPower1)
 	{
 		temp1 = 0;
 		JumpTime1 = 0;
 		JumpHeight1 = 0;
-		g_bJumpkeyPressed1 = FALSE; 
+		Gravity1 = true;
+		g_bJumpkeyPressed1 = FALSE;
 	}
 
 }
@@ -478,23 +484,22 @@ void Player::jump1()
 void Player::jump2()
 {
 	if (!g_bJumpkeyPressed2) return;
-
-	JumpHeight2 = (JumpTime2 * JumpTime2 - jumpPower2 * JumpTime2) / 4.f;
+	Gravity2 = false;
+	JumpHeight2 = (JumpTime2 * JumpTime2 - jumpPower2 * JumpTime2) / 4.f ;
 	_posP2.y += JumpHeight2 - temp2;
 	temp2 = JumpHeight2;
 
-	JumpTime2 += 1.f;		//값을 올리면 점프속도가 빨라짐
+	JumpTime2 += 0.75f;		//값을 올리면 점프속도가 빨라짐
 
-	if (rand2)
-	{
-		JumpTime2 = 0.f;
-		JumpHeight2 = 0;
-		jumpPower2 = 60.f;
-		temp2 = 0.0f;
-		g_bJumpkeyPressed2 = FALSE;
-		return;
-	}
-
+	//if (rand2)
+	//{
+	//	JumpTime2 = 0.f;
+	//	JumpHeight2 = 0;
+	//	jumpPower2 = 60.f;
+	//	temp2 = 0.0f;
+	//	g_bJumpkeyPressed2 = FALSE;
+	//	return;
+	//}
 
 	if (JumpTime2 > jumpPower2)
 	{
@@ -503,6 +508,7 @@ void Player::jump2()
 		JumpTime2 = 0;
 		JumpHeight2 = 0;
 		g_bJumpkeyPressed2 = FALSE;
+		Gravity2 = true;
 	}
 
 }

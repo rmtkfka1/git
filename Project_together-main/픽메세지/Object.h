@@ -17,7 +17,7 @@ public:
 	float GetY() { return _pos.y; }
 	void SetY(float y) { _pos.y = y; }
 	Pos GetSize() { return size; }
-
+	void SetSize(Pos size_) { size = size_; }
 
 protected:
 	ObjectType _type = ObjectType::NONE;

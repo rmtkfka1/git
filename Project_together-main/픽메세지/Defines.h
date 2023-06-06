@@ -1,6 +1,6 @@
 #pragma once
 #define DECLARE_SINGLE(classname)                   \
-public:											\
+public:											    \
 	classname(){}									\
 													\
 public:												\
@@ -15,3 +15,29 @@ public:												\
 
 #define WINDOW_WIDTH 1216
 #define WINDOW_HEIGHT 639
+
+
+#define MakeTile(X,Y) do {											     \
+    Tile* tile = GET_SINGLE(ObjectManager)->CreateObject<Tile>();       \
+    tile->SetPos(Pos(X, Y));											\
+    tile->Init();														\
+    GET_SINGLE(ObjectManager)->Add(tile);								\
+} while(0)
+
+
+
+#define MakeTile_P1(X,Y) do {											\
+    Tile_P1* tile = GET_SINGLE(ObjectManager)->CreateObject<Tile_P1>(); \
+    tile->SetPos(Pos(X, Y));											\
+    tile->Init();														\
+    GET_SINGLE(ObjectManager)->Add(tile);								\
+} while(0)
+
+
+#define MakeTile_P2(X,Y) do {											\
+    Tile_P2* tile = GET_SINGLE(ObjectManager)->CreateObject<Tile_P2>(); \
+    tile->SetPos(Pos(X, Y));											\
+    tile->Init();														\
+    GET_SINGLE(ObjectManager)->Add(tile);								\
+} while(0)
+          

@@ -18,6 +18,8 @@ public:
 	Bullet_Dir GetMotion() { return _motion; }
 
 private:
+
+
 	Bullet_Dir _motion;
 	HDC			mdc2;
 	HBITMAP		hBitmap2;
@@ -25,6 +27,5 @@ private:
 	CImage bullet_img;
 
 	Pos _Renderpos;
-
 };
 

@@ -53,7 +53,6 @@ public:
 	HDC				mdcP1;
 	HBITMAP			hBitmapP1;
 
-
 	////////////////////////////////////////////////////////////////////
 
 	Pos				_posP2{};			// player2의 실제 위치
@@ -81,16 +80,18 @@ public:
 
 	float   JumpTime1 = 0.f;
 	float   JumpHeight1 = 0;
-	float   jumpPower1 = 40.f;
+	float   jumpPower1 = 45.f;
 	float temp1 = 0;
 	BOOL   rand1;
+	BOOL Gravity1;
 	BOOL   g_bJumpkeyPressed1 = FALSE;	//	점프 키 Space bar가 눌리면 TRUE로 변경
 	
 	float   JumpTime2 = 0.f;
 	float   JumpHeight2 = 0;
-	float   jumpPower2 = 40.f;
+	float   jumpPower2 = 45.f;
 	float temp2 = 0;
 	BOOL   rand2;
+	BOOL Gravity2;
 	BOOL   g_bJumpkeyPressed2 = FALSE;	//	점프 키 Space bar가 눌리면 TRUE로 변경
 
 	WCHAR test[100];

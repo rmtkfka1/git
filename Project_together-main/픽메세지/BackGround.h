@@ -18,7 +18,7 @@ public:
 
 	void Render(HDC& mdc, Pos diff1, Pos diff2, ObjectType Choose, bool);
 
-	void TileRender(HDC& mdc);
+
 
 public:
 
@@ -32,12 +32,6 @@ public:
 	CImage		background_img;
 
 
-	//타일 테스트용
-	RECT		_tileTest{};
-	RECT		renderTest{};
-	Pos			_CPos{};				// 실제 좌표
-	Pos			_CRenderposP1{};		// 렌더링 좌표
-	CImage		CTest;
 
 };
 
