@@ -48,3 +48,11 @@ public:												\
    moving_tile->Init();													              \
    GET_SINGLE(ObjectManager)->Add(moving_tile);								          \
 } while(0)
+
+
+#define MakeTile_KnocBack(X,Y) do {											    \
+    Tile_KnockBack* tile = GET_SINGLE(ObjectManager)->CreateObject<Tile_KnockBack>(); \
+    tile->SetPos(Pos(X, Y));											    \
+    tile->Init();														    \
+    GET_SINGLE(ObjectManager)->Add(tile);								    \
+} while(0)

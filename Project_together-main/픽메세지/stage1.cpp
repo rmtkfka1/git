@@ -10,7 +10,7 @@
 #include "Tile_P2.h"
 #include "Tile.h"
 #include "Tile_Moving.h"
-
+#include "Tile_KnockBack.h"
 Stage1::~Stage1()
 {
 
@@ -163,7 +163,10 @@ void Stage1::Init()
 		GET_SINGLE(ObjectManager)->Add(moving_tile2);
 	}
 
-
+	//============================ 넉백 타일 만들기 ==============================//
+	{
+		MakeTile_KnocBack(1200, 450);
+	}
 
 }
 
@@ -213,6 +216,11 @@ void Stage1::Update()
 		moving_tile[i]->Update();
 	}
 
+	const vector<Tile_KnockBack*> tiles_KnockBack = GET_SINGLE(ObjectManager)->GetKnockBack();
+	for (int i = 0; i < tiles_KnockBack.size(); ++i)
+	{
+		tiles_KnockBack[i]->Update();
+	}
 
 };
 
@@ -262,5 +270,10 @@ void Stage1::Render(HDC mdc)
 		moving_tile[i]->Render(mdc);
 	}
 
+	const vector<Tile_KnockBack*> tiles_knockback = GET_SINGLE(ObjectManager)->GetKnockBack();
+	for (Tile_KnockBack* tile : tiles_knockback)
+	{
+		tile->Render(mdc);
+	}
 
 };
