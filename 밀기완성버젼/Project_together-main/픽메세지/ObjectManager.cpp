@@ -28,6 +28,24 @@ void ObjectManager::Add(Tile_KnockBack* object)
 
 }
 
+void ObjectManager::Add(Tile_Push* object)
+{
+
+	if (object == nullptr) return;
+
+
+	//객체 중복검사
+	auto findit = std::find(_vTilePush.begin(), _vTilePush.end(), object);
+
+	if (findit != _vTilePush.end())
+		return;
+	//////////////////////////////////////
+
+	_vTilePush.push_back(object);
+
+
+}
+
 void ObjectManager::Add(Player* object)
 {
 	if (object == nullptr) return;
@@ -145,6 +163,23 @@ void ObjectManager::Remove(Tile_KnockBack* object)
 	//////////////////////////////////////////
 	//메모리 삭제
 	delete object;
+}
+
+void ObjectManager::Remove(Tile_Push* object)
+{
+
+	if (object == nullptr)
+		return;
+
+	//벡터내에서 삭제//////////////////////////////
+	auto it = std::remove(_vTilePush.begin(), _vTilePush.end(), object);
+
+	_vTilePush.erase(it, _vTilePush.end());
+	//////////////////////////////////////////
+	//메모리 삭제
+	delete object;
+
+
 }
 
 void ObjectManager::Remove(Player* object)

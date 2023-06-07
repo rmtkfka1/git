@@ -56,3 +56,10 @@ public:												\
     tile->Init();														    \
     GET_SINGLE(ObjectManager)->Add(tile);								    \
 } while(0)
+
+#define MakeTile_PUSH(X,Y) do {											       \
+    Tile_Push* tile = GET_SINGLE(ObjectManager)->CreateObject<Tile_Push>();    \
+    tile->SetPos(Pos(X, Y));											       \
+    tile->Init();														       \
+    GET_SINGLE(ObjectManager)->Add(tile);								       \
+} while(0)

@@ -74,6 +74,10 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 
 		EndPaint(hwnd, &ps);
 		break;
+	case WM_CHAR:
+		if (wParam == 'q')
+			exit(0);
+		break;
 	case WM_DESTROY:
 		PostQuitMessage(0);
 		break;

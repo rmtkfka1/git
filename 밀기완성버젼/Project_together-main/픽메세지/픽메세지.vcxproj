@@ -148,6 +148,7 @@
     <ClCompile Include="Tile_Moving.cpp" />
     <ClCompile Include="Tile_P1.cpp" />
     <ClCompile Include="Tile_P2.cpp" />
+    <ClCompile Include="Tile_Push.cpp" />
     <ClCompile Include="TImeManager.cpp" />
     <ClCompile Include="기말.cpp" />
   </ItemGroup>
@@ -170,6 +171,7 @@
     <ClInclude Include="Tile_Moving.h" />
     <ClInclude Include="Tile_P1.h" />
     <ClInclude Include="Tile_P2.h" />
+    <ClInclude Include="Tile_Push.h" />
     <ClInclude Include="TimeManager.h" />
     <ClInclude Include="Types.h" />
     <ClInclude Include="잡다한것.h" />

@@ -10,6 +10,7 @@ class Tile_P1;
 class Tile_P2;
 class Tile_Moving;
 class Tile_KnockBack;
+class Tile_Push;
 //class Player2;
 //class Missile;
 //class Foothold;
@@ -29,6 +30,7 @@ public:
 	void Add(Tile_Moving* object);
 	void Add(Missile* object);
 	void Add(Tile_KnockBack* object);
+	void Add(Tile_Push* object);
 
 
 	void Remove(Player* object);
@@ -39,6 +41,7 @@ public:
 	void Remove(Tile_Moving* object);
 	void Remove(Missile* object);
 	void Remove(Tile_KnockBack* object);
+	void Remove(Tile_Push* object);
 
 
 	void Clear(); //씬전환되면 동적할당된 메모리싹날라기
@@ -51,6 +54,7 @@ public:
 	const vector<Tile_KnockBack*>& GetKnockBack() { return _vTileKB; }
 	const vector<Tile_Moving*>& GetTile_Moving() { return _vTileMove; } //외부 CPP,헤더파일에서 벡터가져오기//
 	const vector<Missile*>& GetMissile() { return _vmissile; } //외부 CPP,헤더파일에서 벡터가져오기//
+	const vector<Tile_Push*>& GetTilePush() { return _vTilePush; } //외부 CPP,헤더파일에서 벡터가져오기//
 
 
 
@@ -73,6 +77,7 @@ private:
 	vector<Tile_Moving*> _vTileMove;
 	vector<Missile*> _vmissile;
 	vector<Tile_KnockBack*> _vTileKB;
+	vector<Tile_Push*> _vTilePush;
 
 };
 

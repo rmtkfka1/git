@@ -90,8 +90,9 @@ void Player::Init(BackGround* background) {
 	g_bJumpkeyPressed2 = FALSE;	//	점프 키 Space bar가 눌리면 TRUE로 변경
 
 
-	// 밀기
-	//player2_img_push.Load()
+
+// 밀기
+	player2_img_push.Load(L"리소스\\ch2\\Dude_Monster_Push.png");
 
 	//=================================================================================//
 
@@ -229,6 +230,21 @@ void Player::Update() {
 
 		}
 
+		if (GET_SINGLE(KeyManager)->Getbutton(KeyType::K))
+		{
+			if (pushBool) 
+			{
+				realpushBool = true;
+			}
+
+		}
+
+		else 
+		{
+			pushBool = false;
+			realpushBool = false;
+		}
+
 	}
 
 	CameraGap();
@@ -353,6 +369,23 @@ void Player::CRender(HDC mdc) {
 
 		}
 	}
+	else if (realpushBool) {
+		int moveCnt = static_cast<int>(_motion_cntP2);
+
+		if (_motionP2 == Motion::LEFT)
+		{
+			player2_img_push.Draw(mdcP2, 0, 0, size.x, size.y, moveCnt * 32, 32, 32, 32);
+		}
+
+		if (_motionP2 == Motion::RIGHT)
+		{
+			player2_img_push.Draw(mdcP2, 0, 0, size.x, size.y, moveCnt * 32, 0, 32, 32);
+
+		}
+
+
+	}
+
 	else
 	{
 		int moveCnt = static_cast<int>(_motion_cntP2);
@@ -455,7 +488,8 @@ void Player::CRender(HDC mdc) {
 	swprintf_s(test, L"_motion_cntP1 :%.1f", _motion_cntP1);
 	TextOut(mdc, 0, 70, test, lstrlen(test));
 
-
+	swprintf_s(test, L"JumpHeight1 :%.1f", JumpHeight1);
+	TextOut(mdc, 1000, 90, test, lstrlen(test));
 
 	DeleteObject(hBitmapP1);
 	DeleteDC(mdcP1);
@@ -478,7 +512,7 @@ void Player::jump1()
 
 	JumpTime1 += 1.1f;		//값을 올리면 점프속도가 빨라짐
 
-	if (JumpHeight1 < -126.5f) {
+	if (JumpHeight1 < -126.f) {
 		JumpMotionP1 = Motion::DOWN;
 	}
 
@@ -542,7 +576,7 @@ void Player::jump2()
 	//	return;
 	//}
 
-	if (JumpHeight2 < -126.5f) {
+	if (JumpHeight2 < -126.f) {
 		JumpMotionP2 = Motion::DOWN;
 	}
 
@@ -611,14 +645,6 @@ void Player::KnocBackP2()
 			_KnocBackP2 = false;
 	}
 }
-
-// player2 밀기
-void Player::Push()
-{
-
-
-}
-
 
 // 카메라 처리 함수
 

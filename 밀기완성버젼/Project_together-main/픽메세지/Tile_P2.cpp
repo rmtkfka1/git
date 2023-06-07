@@ -28,58 +28,49 @@ void Tile_P2::Init()
 void Tile_P2::Update()
 {
 
-
-
     const vector<Player*>& player = GET_SINGLE(ObjectManager)->GetPlayer();  //벡터를 가져오는
-
     Player* p = player[0];
 
-    const vector<Tile_P2*>& tiles = GET_SINGLE(ObjectManager)->GetTile_P2();   //벡터를 가져오는것
+    RECT p_rect = { p->_posP2.x,p->_posP2.y,p->_posP2.x + p->GetSize().x ,p->_posP2.y + p->GetSize().y };
+    RECT tile_rect = { _pos.x, _pos.y, _pos.x + size.x
+        , _pos.y + size.y };
+    RECT intersect_rect;
 
-
-    for (int i = 0; i < tiles.size(); ++i)
+    if (IntersectRect(&intersect_rect, &p_rect, &tile_rect))
     {
-        RECT p_rect = { p->_posP2.x,p->_posP2.y,p->_posP2.x + p->GetSize().x ,p->_posP2.y + p->GetSize().y };
-        RECT tile_rect = { tiles[i]->GetPos().x, tiles[i]->GetPos().y, tiles[i]->GetPos().x + tiles[i]->GetSize().x
-            ,tiles[i]->GetPos().y + tiles[i]->GetSize().y };
-        RECT intersect_rect;
 
-        if (IntersectRect(&intersect_rect, &p_rect, &tile_rect))
+
+        float GapW = intersect_rect.right - intersect_rect.left;
+        float GAPH = intersect_rect.bottom - intersect_rect.top;
+
+        if (GapW > GAPH)
         {
 
-       
-            float GapW = intersect_rect.right - intersect_rect.left;
-            float GAPH = intersect_rect.bottom - intersect_rect.top;
-
-            if (GapW > GAPH)
+            if (intersect_rect.top == tile_rect.top)
             {
-
-                if (intersect_rect.top == tile_rect.top)
-                {
-                    p->_posP2.y -= GAPH;
-                }
-
-                else if (intersect_rect.bottom == tile_rect.bottom)
-                {
-                    p->_posP2.y += GAPH;
-                }
+                p->_posP2.y -= GAPH;
             }
 
-            else
+            else if (intersect_rect.bottom == tile_rect.bottom)
             {
-                if (intersect_rect.left == tile_rect.left)
-                {
-                    p->_posP2.x = p->_posP2.x - GapW;
-                }
-
-                else if (intersect_rect.right == tile_rect.right)
-                {
-                    p->_posP2.x = p->_posP2.x + GapW;
-
-                }
+                p->_posP2.y += GAPH;
             }
-
         }
+
+        else
+        {
+            if (intersect_rect.left == tile_rect.left)
+            {
+                p->_posP2.x = p->_posP2.x - GapW;
+            }
+
+            else if (intersect_rect.right == tile_rect.right)
+            {
+                p->_posP2.x = p->_posP2.x + GapW;
+
+            }
+        }
+
     }
 
 }

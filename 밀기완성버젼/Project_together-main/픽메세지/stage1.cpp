@@ -11,6 +11,7 @@
 #include "Tile.h"
 #include "Tile_Moving.h"
 #include "Tile_KnockBack.h"
+#include "Tile_Push.h"
 Stage1::~Stage1()
 {
 
@@ -138,9 +139,9 @@ void Stage1::Init()
 	}
 	//============================ Tile_P2 만들기 ==============================//
 	{
+		
 
 	
-
 	}
 
 	//============================ Moving_Tile 만들기  ===========================//
@@ -165,8 +166,19 @@ void Stage1::Init()
 
 	//============================ 넉백 타일 만들기 ==============================//
 	{
-		MakeTile_KnocBack(1200, 450);
+		MakeTile_KnocBack(1600, 450);
 	}
+
+	//===============================Tile_Push(밀수있는 타일)만들기======================================//
+
+
+	MakeTile_PUSH(1000, 440);
+	MakeTile_PUSH(1000, 400);
+	MakeTile_PUSH(1000, 360);
+	MakeTile_PUSH(1000, 320);
+	MakeTile_PUSH(1000, 280);
+
+
 
 }
 
@@ -222,6 +234,13 @@ void Stage1::Update()
 		tiles_KnockBack[i]->Update();
 	}
 
+
+	const vector<Tile_Push*> tile_push = GET_SINGLE(ObjectManager)->GetTilePush();
+	for (int i = 0; i < tile_push.size(); ++i)
+	{
+		tile_push[i]->Update();
+	}
+
 };
 
 
@@ -274,6 +293,13 @@ void Stage1::Render(HDC mdc)
 	for (Tile_KnockBack* tile : tiles_knockback)
 	{
 		tile->Render(mdc);
+	}
+
+
+	const vector<Tile_Push*> tile_push = GET_SINGLE(ObjectManager)->GetTilePush();
+	for (int i = 0; i < tile_push.size(); ++i)
+	{
+		tile_push[i]->Render(mdc);
 	}
 
 };

@@ -39,7 +39,6 @@ public:
 	void KnocBackP2();
 
 	// player2의 밀기
-	void Push();
 
 public:
 
@@ -123,6 +122,8 @@ public:
 
 	// player2 밀기
 	CImage			player2_img_push;
+	bool			pushBool{};
+	bool			realpushBool{};
 
 	// 공용
 	////////////////////////////////////////////////////////////////////
